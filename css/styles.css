@@ -47,6 +47,10 @@ button:hover {
     background-color: #218838;
 }
 
+#input-section input[type="file"] {
+    margin-top: 1em;
+}
+
 #graph-section {
     width: 100%;
     height: auto;
