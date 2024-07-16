@@ -51,6 +51,11 @@ button:hover {
     margin-top: 1em;
 }
 
+#error-message {
+    margin-top: 1em;
+    color: red;
+}
+
 #graph-section {
     width: 100%;
     height: auto;

@@ -6,8 +6,7 @@ function plotGraph() {
     const xValues = document.getElementById('x-values').value.split(',').map(val => val.trim());
     const yValues = document.getElementById('y-values').value.split(',').map(val => val.trim());
 
-    if (xValues.length !== yValues.length) {
-        alert('X and Y values must have the same length');
+    if (!validateInputs(xValues, yValues)) {
         return;
     }
 
@@ -36,6 +35,31 @@ function plotGraph() {
             }
         }
     });
+}
+
+function validateInputs(xValues, yValues) {
+    if (xValues.length === 0 || yValues.length === 0) {
+        displayError('X and Y values cannot be empty');
+        return false;
+    }
+
+    if (xValues.length !== yValues.length) {
+        displayError('X and Y values must have the same length');
+        return false;
+    }
+
+    if (xValues.some(val => isNaN(val)) || yValues.some(val => isNaN(val))) {
+        displayError('X and Y values must be numeric');
+        return false;
+    }
+
+    return true;
+}
+
+function displayError(message) {
+    const errorElement = document.getElementById('error-message');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
 }
 
 function handleFileUpload(event) {
