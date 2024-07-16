@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Plotter</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Graph Plotter</h1>
+    </header>
+    <main>
+        <section id="input-section">
+            <form id="data-form">
+                <label for="x-values">X Values (comma-separated):</label>
+                <input type="text" id="x-values" name="x-values">
+                
+                <label for="y-values">Y Values (comma-separated):</label>
+                <input type="text" id="y-values" name="y-values">
+                
+                <label for="file-upload">Upload CSV File:</label>
+                <input type="file" id="file-upload" name="file-upload">
+                
+                <button type="button" onclick="plotGraph()">Plot Graph</button>
+            </form>
+        </section>
+        <section id="graph-section">
+            <canvas id="graph-canvas"></canvas>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Graph Plotter</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
