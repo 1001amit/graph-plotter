@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function plotGraph() {
     const xValues = document.getElementById('x-values').value.split(',').map(val => val.trim());
     const yValues = document.getElementById('y-values').value.split(',').map(val => val.trim());
+    const graphType = document.getElementById('graph-type').value;
 
     if (!validateInputs(xValues, yValues)) {
         return;
@@ -12,26 +13,22 @@ function plotGraph() {
 
     const ctx = document.getElementById('graph-canvas').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: graphType,
         data: {
             labels: xValues,
             datasets: [{
                 label: 'Sample Data',
                 data: yValues,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: graphType === 'pie' ? getPieColors(yValues.length) : 'rgba(75, 192, 192, 0.2)',
+                borderColor: graphType === 'pie' ? 'rgba(75, 192, 192, 1)' : 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
             scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
+                x: graphType !== 'pie' ? { beginAtZero: true } : undefined,
+                y: graphType !== 'pie' ? { beginAtZero: true } : undefined
             }
         }
     });
@@ -89,4 +86,12 @@ function processCSVData(data) {
 
     document.getElementById('x-values').value = xValues.join(',');
     document.getElementById('y-values').value = yValues.join(',');
+}
+
+function getPieColors(count) {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+        colors.push(`hsl(${(i / count) * 360}, 100%, 50%)`);
+    }
+    return colors;
 }
