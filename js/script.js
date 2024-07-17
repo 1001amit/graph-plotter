@@ -6,6 +6,9 @@ function plotGraph() {
     const xValues = document.getElementById('x-values').value.split(',').map(val => val.trim());
     const yValues = document.getElementById('y-values').value.split(',').map(val => val.trim());
     const graphType = document.getElementById('graph-type').value;
+    const graphTitle = document.getElementById('graph-title').value;
+    const backgroundColor = document.getElementById('background-color').value;
+    const borderColor = document.getElementById('border-color').value;
 
     if (!validateInputs(xValues, yValues)) {
         return;
@@ -17,15 +20,21 @@ function plotGraph() {
         data: {
             labels: xValues,
             datasets: [{
-                label: 'Sample Data',
+                label: graphTitle || 'Sample Data',
                 data: yValues,
-                backgroundColor: graphType === 'pie' ? getPieColors(yValues.length) : 'rgba(75, 192, 192, 0.2)',
-                borderColor: graphType === 'pie' ? 'rgba(75, 192, 192, 1)' : 'rgba(75, 192, 192, 1)',
+                backgroundColor: graphType === 'pie' ? getPieColors(yValues.length) : backgroundColor,
+                borderColor: graphType === 'pie' ? 'rgba(75, 192, 192, 1)' : borderColor,
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: graphTitle
+                }
+            },
             scales: {
                 x: graphType !== 'pie' ? { beginAtZero: true } : undefined,
                 y: graphType !== 'pie' ? { beginAtZero: true } : undefined
