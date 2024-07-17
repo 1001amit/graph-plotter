@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('file-upload').addEventListener('change', handleFileUpload);
 });
 
+let chart;
+
 function plotGraph() {
     const xValues = document.getElementById('x-values').value.split(',').map(val => val.trim());
     const yValues = document.getElementById('y-values').value.split(',').map(val => val.trim());
@@ -15,7 +17,12 @@ function plotGraph() {
     }
 
     const ctx = document.getElementById('graph-canvas').getContext('2d');
-    new Chart(ctx, {
+
+    if (chart) {
+        chart.destroy();
+    }
+
+    chart = new Chart(ctx, {
         type: graphType,
         data: {
             labels: xValues,
@@ -41,6 +48,8 @@ function plotGraph() {
             }
         }
     });
+
+    document.getElementById('export-button').style.display = 'block';
 }
 
 function validateInputs(xValues, yValues) {
@@ -103,4 +112,11 @@ function getPieColors(count) {
         colors.push(`hsl(${(i / count) * 360}, 100%, 50%)`);
     }
     return colors;
+}
+
+function exportGraph() {
+    const link = document.createElement('a');
+    link.href = document.getElementById('graph-canvas').toDataURL('image/png');
+    link.download = 'graph.png';
+    link.click();
 }
