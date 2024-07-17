@@ -10,6 +10,10 @@
 <body>
     <header>
         <h1>Graph Plotter</h1>
+        <label for="dark-mode-toggle" class="switch">
+            <input type="checkbox" id="dark-mode-toggle">
+            <span class="slider"></span>
+        </label>
     </header>
     <main>
         <section id="input-section">
@@ -38,6 +42,9 @@
                 
                 <label for="file-upload">Upload CSV File:</label>
                 <input type="file" id="file-upload" name="file-upload">
+
+                <label for="show-legend">Show Legend:</label>
+                <input type="checkbox" id="show-legend" name="show-legend" checked>
                 
                 <button type="button" onclick="plotGraph()">Plot Graph</button>
             </form>

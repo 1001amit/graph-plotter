@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('file-upload').addEventListener('change', handleFileUpload);
+    document.getElementById('dark-mode-toggle').addEventListener('change', toggleDarkMode);
+    applyStoredTheme();
 });
 
 let chart;
@@ -11,6 +13,7 @@ function plotGraph() {
     const graphTitle = document.getElementById('graph-title').value;
     const backgroundColor = document.getElementById('background-color').value;
     const borderColor = document.getElementById('border-color').value;
+    const showLegend = document.getElementById('show-legend').checked;
 
     if (!validateInputs(xValues, yValues)) {
         return;
@@ -40,6 +43,12 @@ function plotGraph() {
                 title: {
                     display: true,
                     text: graphTitle
+                },
+                tooltip: {
+                    enabled: true
+                },
+                legend: {
+                    display: showLegend
                 }
             },
             scales: {
@@ -119,4 +128,18 @@ function exportGraph() {
     link.href = document.getElementById('graph-canvas').toDataURL('image/png');
     link.download = 'graph.png';
     link.click();
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+function applyStoredTheme() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('dark-mode-toggle').checked = true;
+    }
 }
